@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/speed run con fuego.png" width="200" alt="Speedrun Delivery Logo">
+</p>
+
 # 🚀 Speedrun Delivery
 
 [![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
