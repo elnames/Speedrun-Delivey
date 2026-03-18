@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  nombre    String
+  role      String   @default("CLIENTE") // Enum: CLIENTE, REPARTIDOR, ADMIN
+  createdAt DateTime @default(now())
+
+  tarifas  Tarifa[]
+  pedidosC Order[]  @relation("Cliente")
+  pedidosR Order[]  @relation("Repartidor")
+  offers   Offer[]  @relation("RepartidorOffer")
+  reviewsR Review[] @relation("Recibida")
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  descripcion   String
+  puntoRetiro   String
+  puntoEntrega  String
+  montoOfertado Float
+  status        String   @default("ABIERTA") // Enum: ABIERTA, ASIGNADA, etc.
+  startTime     DateTime?
+  endTime       DateTime?
+  totalSeconds  Int?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  clienteId    Int
+  cliente      User  @relation("Cliente", fields: [clienteId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  repartidorId Int?
+  repartidor   User? @relation("Repartidor", fields: [repartidorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  offers  Offer[]
+  reviews Review[]
+  evidences Evidence[]
+}
+
+model Tarifa {
+  id           Int    @id @default(autoincrement())
+  zona         String
+  precioBase   Float
+  repartidorId Int
+  repartidor   User   @relation(fields: [repartidorId], references: [id])
+}
+
+model Review {
+  id         Int     @id @default(autoincrement())
+  puntos     Int
+  comentario String?
+  createdAt  DateTime @default(now())
+
+  orderId  Int
+  order    Order @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sujetoId Int
+  sujeto   User  @relation("Recibida", fields: [sujetoId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Offer {
+  id           Int      @id @default(autoincrement())
+  montoOfertado Float
+  createdAt    DateTime @default(now())
+
+  orderId      Int
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  repartidorId Int
+  repartidor   User     @relation("RepartidorOffer", fields: [repartidorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([orderId, repartidorId])
+}
+
+model Evidence {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  imageUrl  String   @db.NVarChar(MAX) // Para Base64
+  notas     String?
+  createdAt DateTime @default(now())
+}
