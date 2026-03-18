@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/speed run con fuego.png" width="200" alt="Speedrun Delivery Logo">
+  <img src="assets/speed run circular.png" width="200" alt="Speedrun Delivery Logo">
 </p>
 
 # 🚀 Speedrun Delivery
