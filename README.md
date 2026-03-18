@@ -1,89 +1,73 @@
-# 🌑 Speedrun Delivery: Sober Obsidian
+# 🚀 Speedrun Delivery
 
-[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)](https://nestjs.com/)
-[![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=flat-square&logo=Prisma&logoColor=white)](https://www.prisma.io/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-**Speedrun Delivery** es una plataforma de logística de alto rendimiento diseñada bajo la estética **Sober Obsidian**. Un sistema sin fricciones, sin retrasos y enfocado en la excelencia operativa.
-
----
-
-## ✨ Características Principales
-
-- **Interfaz Sober Obsidian**: Fondo negro puro (`#050505`) con tipografía de alto contraste y efectos de "Glassmorphism" premium.
-- **Sincronización en Tiempo Real**: Seguimiento de pedidos en vivo mediante WebSockets (Socket.io).
-- **Flujo de Negociación Avanzado**: Sistema de invitaciones directas con soporte para contra-ofertas.
-- **Evidencia Digital**: Sistema de carga de fotos (Base64) para comprobantes de entrega instantáneos.
-- **Arquitectura Escalable**: Estructura de monorepositorio con backend en NestJS y frontend en React/Vite.
+> **"Entregas Evolucionadas. Solo Excelencia."**
+> Logística de alto rendimiento para quienes valoran el tiempo. Sin fricciones, sin retrasos.
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## ✨ La Experiencia Speedrun
+
+**Speedrun Delivery** reinventa la logística de última milla con un enfoque en la velocidad y la transparencia. Nuestra plataforma ofrece una infraestructura de clase mundial diseñada para operar en tiempo real.
+
+- **Fricción Cero**: Interfaz minimalista diseñada para la eficiencia operativa máxima.
+- **Sincronización Atómica**: Cada actualización de estado se propaga instantáneamente a todos los interesados.
+- **Negociación Fluid**: Sistema bidireccional de ofertas que permite acuerdos rápidos y justos.
+- **Evidencia Instantánea**: Sistema optimizado de carga de fotos para validación inmediata de entregas.
+
+---
+
+## 🎨 Estética de Alto Rendimiento
+
+El sistema visual de **Speedrun Delivery** se centra en la claridad y el minimalismo premium:
+
+- **Contraste Extremo**: El fondo negro profundo permite una legibilidad superior de los indicadores críticos.
+- **HUD Glassmorphism**: Componentes con capas translúcidas que proporcionan profundidad sin distraer al usuario.
+- **Animaciones Fluidas**: Micro-interacciones suaves que guían al usuario a través del flujo de entrega.
+- **Atmósfera Dinámica**: Efectos visuales sutiles que aportan una sensación de tecnología viva y activa.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+Construido con las tecnologías más modernas para garantizar estabilidad y escalabilidad:
+
+| Componente | Tecnología |
+| :--- | :--- |
+| **Arquitectura** | Monorepo (Frontend + Backend) |
+| **Backend** | NestJS (Type-safe & Scalable) |
+| **Frontend** | React + Vite (Ultra-fast Rendering) |
+| **Base de Datos** | Prisma ORM + MSSQL (Data Reliability) |
+| **Comunicación** | Socket.io (Low-latency WebSockets) |
+| **Estructura** | Tailwind CSS (Design System Consistency) |
+
+---
+
+## 🏗️ Arquitectura de Datos
 
 ```mermaid
-graph TD
-    A[Cliente / App] -->|React/Vite| B[Frontend HUB]
-    B -->|REST/WS| C[NestJS Logic Core]
-    C -->|Prisma ORM| D[(Base de Datos MSSQL)]
-    C -->|Socket.io| B
+graph LR
+    A[Speedrun Client] -->|REST/WS| B[NestJS Logic Core]
+    B -->|Prisma| C[(Enterprise Database)]
 ```
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Configuración del Repositorio
 
 ```bash
-├── sd-backend/       # Servidor NestJS (Lógica de Negocio, Socket.io, JWT)
-├── sd-frontend/      # Dashboard React (Tailwind, Framer Motion)
-└── README.md         # Documentación Principal
+├── sd-backend/       # Lógica de Negocio y API
+├── sd-frontend/      # Dashboard y Landing Page
+└── README.md         # Documentación Central
 ```
 
 ---
-
-## 🛠️ Configuración Rápida
-
-### 1. Requisitos Previos
-- Node.js v18+
-- Una instancia de base de datos SQL Server (MSSQL)
-
-### 2. Configuración del Backend
-```bash
-cd sd-backend
-npm install
-cp .env.example .env
-# Configura tu DATABASE_URL en .env
-npx prisma generate
-npx prisma migrate dev
-npm run start:dev
-```
-
-### 3. Configuración del Frontend
-```bash
-cd sd-frontend
-npm install
-cp .env.example .env
-# Configura tu VITE_API_URL en .env
-npm run dev
-```
-
-
----
-
-## 🌑 Lineamientos Estéticos
-
-Este proyecto utiliza el sistema de diseño **Sober Obsidian**:
-- **Fondo**: `#050505` (Obsidian Black)
-- **Acentos**: Blanco puro y escala de grises premium.
-- **Efectos**: Sombras suaves, bordes sutiles y animaciones fluidas con Framer Motion.
-
----
-
-## 📝 Licencia
-
-Distribuido bajo la Licencia MIT. Consulta `LICENSE` para más información.
 
 <p align="center">
-  Logística Evolucionada. Solo Excelencia.
+  <strong>Speedrun Delivery</strong> | Logística Evolucionada.
 </p>
