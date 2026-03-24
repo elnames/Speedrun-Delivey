@@ -10,43 +10,53 @@ export default function RegisterPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const validatePassword = (pwd: string): string | null => {
+    if (pwd.length < 8) return 'La contraseña debe tener al menos 8 caracteres';
+    if (!/[A-Z]/.test(pwd)) return 'La contraseña debe tener al menos una mayúscula';
+    if (!/[0-9]/.test(pwd)) return 'La contraseña debe tener al menos un número';
+    return null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    const pwdError = validatePassword(form.password);
+    if (pwdError) { setError(pwdError); return; }
     setLoading(true);
     try {
       await register(form);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al registrarse');
+      const msg = err.response?.data?.message;
+      setError(Array.isArray(msg) ? msg[0] : (msg || 'Error al registrarse'));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#050505] relative overflow-hidden font-sans text-white py-12">
+    <div className="min-h-screen flex items-center justify-center bg-[#050505] relative overflow-hidden font-sans text-white py-6 sm:py-12">
       <div className="fixed inset-0 z-0">
         <SmokeBackground smokeColor="#ffffff" />
       </div>
 
       <div className="relative z-10 w-full max-w-md px-4">
         <div className="text-center mb-8 animate-fade-in flex flex-col items-center">
-          <img src="/speed run con fuego.png" alt="Speedrun Delivery" className="w-24 h-24 object-contain mb-4 drop-shadow-[0_0_25px_rgba(255,255,255,0.1)]" />
-          <h1 className="text-3xl font-bold text-white tracking-tight uppercase">
+          <img src="/speed run con fuego.png" alt="Speedrun Delivery" className="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.08)]" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight uppercase">
             Crea tu cuenta
           </h1>
           <p className="text-neutral-400 text-sm mt-2 font-medium tracking-widest">Únete a nuestra élite de entregas</p>
         </div>
 
-        <div className="glass-premium p-8 animate-slide-up relative">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="glass-premium p-5 sm:p-8 animate-slide-up relative">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
               <label className="block text-sm font-medium text-neutral-400 mb-1.5 uppercase tracking-wider">Nombre Completo</label>
               <input
                 id="reg-nombre"
                 className="input-clean border-white/10 bg-white/5 text-white placeholder:text-neutral-600 focus:border-white/30"
-                placeholder="Javier Jorquera"
+                placeholder="Tu nombre completo"
                 value={form.nombre}
                 onChange={(e) => setForm({ ...form, nombre: e.target.value })}
                 required
@@ -74,7 +84,7 @@ export default function RegisterPage() {
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 required
-                minLength={6}
+                minLength={8}
               />
             </div>
 

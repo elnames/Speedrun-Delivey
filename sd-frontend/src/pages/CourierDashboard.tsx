@@ -108,14 +108,14 @@ export default function CourierDashboard() {
   return (
     <div className="min-h-screen bg-neutral-950 font-sans selection:bg-white/10">
       <Navbar />
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-4xl mx-auto px-4 py-5 sm:py-8 space-y-5 sm:space-y-8">
         <div className="flex items-center gap-3">
-          <h2 className="text-3xl font-bold tracking-tight text-white">Dashboard Repartidor</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Dashboard Repartidor</h2>
           <span className="text-muted text-sm mt-1">/ {user?.nombre}</span>
         </div>
 
         {activeOrder && (
-          <div onClick={() => setDetailOrderId(activeOrder.id)} className="glass-premium border-brand/40 shadow-brand/10 p-6 animate-fade-in relative overflow-hidden cursor-pointer group">
+          <div onClick={() => setDetailOrderId(activeOrder.id)} className="glass-premium border-brand/40 shadow-brand/10 p-4 sm:p-6 animate-fade-in relative overflow-hidden cursor-pointer group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-brand/10 rounded-full blur-3xl group-hover:bg-brand/20 transition-all" />
             <h3 className="text-brand-light font-semibold mb-3 flex items-center gap-2">
               <span className="relative flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-brand-light"></span></span>
@@ -151,33 +151,33 @@ export default function CourierDashboard() {
           <div className="space-y-4 animate-slide-up">
             <h3 className="text-lg font-bold text-white border-l-4 border-orange-500 pl-4 uppercase tracking-tighter">🔔 Solicitudes Directas Pendientes</h3>
             {myOrders.filter(o => o.status === 'INVITADO').map(inv => (
-              <div key={inv.id} className="glass-premium p-6 border-orange-500/20 bg-orange-500/5">
+              <div key={inv.id} className="glass-premium p-4 sm:p-6 border-orange-500/20 bg-orange-500/5">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h4 className="text-white font-bold text-lg mb-1">{inv.descripcion}</h4>
-                    <p className="text-muted text-xs font-mono">Solicitado por: {inv.cliente.nombre}</p>
+                    <h4 className="text-white font-bold text-base sm:text-lg mb-1">{inv.descripcion}</h4>
+                    <p className="text-muted text-xs font-mono">Por: {inv.cliente.nombre}</p>
                   </div>
-                  <div className="text-brand-light font-black text-xl">${inv.montoOfertado.toLocaleString()}</div>
+                  <div className="text-brand-light font-black text-lg sm:text-xl ml-4 shrink-0">${inv.montoOfertado.toLocaleString()}</div>
                 </div>
-                <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm">
                   <div className="p-3 bg-white/5 rounded-xl border border-white/5">
-                    <span className="block text-[10px] text-muted uppercase font-bold mb-1">Desde</span>
-                    <span className="text-gray-300">{inv.puntoRetiro}</span>
+                    <span className="block text-xs text-muted uppercase font-bold mb-1">Desde</span>
+                    <span className="text-gray-300 text-sm break-words">{inv.puntoRetiro}</span>
                   </div>
                   <div className="p-3 bg-white/5 rounded-xl border border-white/5">
-                    <span className="block text-[10px] text-muted uppercase font-bold mb-1">Hasta</span>
-                    <span className="text-gray-300">{inv.puntoEntrega}</span>
+                    <span className="block text-xs text-muted uppercase font-bold mb-1">Hasta</span>
+                    <span className="text-gray-300 text-sm break-words">{inv.puntoEntrega}</span>
                   </div>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button onClick={() => acceptInv(inv.id)} className="flex-1 btn-primary py-2.5">Aceptar</button>
-                  <button 
-                    onClick={() => { setOfferModal(inv); setOfferAmount(inv.montoOfertado.toString()); }} 
+                  <button
+                    onClick={() => { setOfferModal(inv); setOfferAmount(inv.montoOfertado.toString()); }}
                     className="flex-1 btn-outline py-2.5 hover:bg-white/5"
                   >
                     Contra-oferta
                   </button>
-                  <button onClick={() => rejectInv(inv.id)} className="px-6 btn-outline border-red-500/30 text-red-400 hover:bg-red-500/10">Rechazar</button>
+                  <button onClick={() => rejectInv(inv.id)} className="sm:flex-none px-4 sm:px-6 py-2.5 btn-outline border-red-500/30 text-red-400 hover:bg-red-500/10">Rechazar</button>
                 </div>
               </div>
             ))}
@@ -205,18 +205,18 @@ export default function CourierDashboard() {
               <p className="text-muted text-sm italic">No hay ofertas disponibles en este momento.</p>
             ) : (
               openOrders.map((order) => (
-                <div key={order.id} className="glass-premium p-5 group hover:border-white/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-muted text-xs">#{order.id}</span>
-                      <h4 className="text-white font-medium text-lg">{order.descripcion}</h4>
-                      <span className="badge bg-blue-900/30 text-blue-400 border-blue-500/30 ml-auto md:ml-0">${order.montoOfertado.toLocaleString()}</span>
+                <div key={order.id} className="glass-premium p-4 sm:p-5 group hover:border-white/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start gap-2 mb-2 flex-wrap">
+                      <span className="text-muted text-xs shrink-0">#{order.id}</span>
+                      <h4 className="text-white font-medium text-sm sm:text-base">{order.descripcion}</h4>
+                      <span className="badge bg-blue-900/30 text-blue-400 border-blue-500/30 ml-auto shrink-0">${order.montoOfertado.toLocaleString()}</span>
                     </div>
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
-                      <span><span className="text-muted">De:</span> {order.puntoRetiro}</span>
-                      <span className="text-muted">→</span>
-                      <span><span className="text-muted">A:</span> {order.puntoEntrega}</span>
-                    <span className="ml-auto text-xs text-muted">Solicita: {order.cliente.nombre}</span>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs sm:text-sm text-gray-400">
+                      <span className="truncate"><span className="text-muted">De:</span> {order.puntoRetiro}</span>
+                      <span className="text-muted hidden sm:inline">→</span>
+                      <span className="truncate"><span className="text-muted">A:</span> {order.puntoEntrega}</span>
+                    <span className="sm:ml-auto text-xs text-muted mt-1 sm:mt-0">Por: {order.cliente.nombre}</span>
                   </div>
                 </div>
                 <button
@@ -284,7 +284,7 @@ export default function CourierDashboard() {
                     <span className="text-white font-medium">{t.zona}</span>
                     <span className="text-brand-light font-medium text-lg">${t.precioBase.toLocaleString()}</span>
                   </div>
-                  <button className="text-gray-500 hover:text-red-400 p-2 rounded-lg hover:bg-white/5 transition-colors" onClick={() => deleteTarifa(t.id)}>
+                  <button className="text-gray-500 hover:text-red-400 p-2.5 rounded-lg hover:bg-white/5 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center" onClick={() => deleteTarifa(t.id)}>
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                   </button>
                 </div>
@@ -296,8 +296,8 @@ export default function CourierDashboard() {
 
       {offerModal && (
         <div className="fixed inset-0 bg-dark-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="glass-premium w-full max-w-sm p-6 animate-fade-in">
-            <h3 className="text-lg font-semibold text-white mb-2">🏷️ Enviar Oferta</h3>
+          <div className="glass-premium w-full max-w-sm p-4 sm:p-6 animate-fade-in max-h-[90vh] overflow-y-auto">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-2">🏷️ Enviar Oferta</h3>
             <p className="text-xs text-muted mb-6">Pedido #{offerModal.id} | {offerModal.descripcion}</p>
             <div className="space-y-4">
               <div>

@@ -13,8 +13,8 @@ export default function OrderTimeline({ status }: Props) {
   const currentIdx = steps.findIndex(s => s.key === status);
   
   return (
-    <div className="w-full py-8">
-      <div className="relative flex justify-between">
+    <div className="w-full py-6 sm:py-8 overflow-x-auto">
+      <div className="relative flex justify-between min-w-[280px]">
         {/* Background Line */}
         <div className="absolute top-5 left-0 w-full h-[2px] bg-white/10 z-0" />
         
@@ -31,14 +31,14 @@ export default function OrderTimeline({ status }: Props) {
           return (
             <div key={step.key} className="relative z-10 flex flex-col items-center group">
               <div className={`
-                w-10 h-10 rounded-full flex items-center justify-center text-sm transition-all duration-500
+                w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm transition-all duration-500
                 ${isActive ? 'bg-brand text-white border-brand shadow-[0_0_15px_rgba(0,102,255,0.4)]' : 'bg-dark-800 text-gray-600 border-white/10'}
                 border-2 ${isCurrent ? 'animate-pulse scale-110 shadow-brand' : ''}
               `}>
                 {step.icon}
               </div>
-              <div className="mt-3 text-center">
-                <p className={`text-[10px] font-black tracking-widest uppercase transition-colors ${isActive ? 'text-white' : 'text-gray-600'}`}>
+              <div className="mt-2 sm:mt-3 text-center">
+                <p className={`text-[9px] sm:text-[10px] font-black tracking-widest uppercase transition-colors ${isActive ? 'text-white' : 'text-gray-600'}`}>
                   {step.label}
                 </p>
                 {isCurrent && (

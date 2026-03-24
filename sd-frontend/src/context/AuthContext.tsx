@@ -40,7 +40,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(data.access_token);
       setUser(data.user);
     } catch (error: any) {
-      alert(`Error de Login: ${error.response?.data?.message || error.message || 'Desconocido'}`);
       throw error;
     }
   };
@@ -53,7 +52,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken(data.access_token);
       setUser(data.user);
     } catch (error: any) {
-      alert(`Error de Registro: ${error.response?.data?.message || error.message || 'Desconocido'}`);
       throw error;
     }
   };

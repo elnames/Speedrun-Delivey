@@ -66,7 +66,7 @@ export default function ClientDashboard() {
 
   const subscribeOrder = useCallback((order: Order) => {
     if (order.status === 'EN_CAMINO' || order.status === 'ASIGNADA') {
-      const wsUrl = import.meta.env.VITE_WS_URL || 'http://100.117.249.82:3000';
+      const wsUrl = import.meta.env.VITE_WS_URL || 'http://localhost:3000';
       const socket = io(`${wsUrl}/orders`);
       socket.emit('joinOrder', order.id);
       socket.on('orderStatusChanged', (updated: Order) => {
@@ -123,10 +123,10 @@ export default function ClientDashboard() {
   return (
     <div className="min-h-screen bg-neutral-950 font-sans selection:bg-white/10">
       <Navbar />
-      <div className="max-w-4xl mx-auto px-4 py-10 space-y-10">
-        
+      <div className="max-w-4xl mx-auto px-4 py-6 sm:py-10 space-y-6 sm:space-y-10">
+
         <div className="flex items-center gap-3">
-          <h2 className="text-3xl font-bold tracking-tight text-white">Dashboard Cliente</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Dashboard Cliente</h2>
           <span className="text-muted text-sm mt-1">/ {user?.nombre}</span>
         </div>
 
@@ -136,14 +136,14 @@ export default function ClientDashboard() {
           </div>
         )}
 
-        <div className="glass-premium p-6 md:p-8 animate-slide-up">
-          <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-3">
-             <h3 className="text-lg font-semibold text-white">📦 {selectedCourier ? `Solicitud Directa a ${selectedCourier.nombre}` : 'Nuevo Pedido'}</h3>
+        <div className="glass-premium p-4 md:p-8 animate-slide-up">
+          <div className="flex justify-between items-center mb-5 border-b border-white/10 pb-3">
+             <h3 className="text-base sm:text-lg font-semibold text-white">📦 {selectedCourier ? `Solicitud a ${selectedCourier.nombre}` : 'Nuevo Pedido'}</h3>
              {selectedCourier && (
-               <button onClick={() => setSelectedCourier(null)} className="text-[10px] text-red-400 font-bold uppercase tracking-widest hover:text-red-300">Cancelar Selección</button>
+               <button onClick={() => setSelectedCourier(null)} className="text-xs text-red-400 font-bold uppercase tracking-widest hover:text-red-300 py-1">Cancelar</button>
              )}
           </div>
-          <form onSubmit={handleCreate} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form onSubmit={handleCreate} className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-5">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-300 mb-1.5">Descripción</label>
               <input id="order-desc" className="input-clean" placeholder="Ej: Paquete pequeño, documentos..."
@@ -176,16 +176,16 @@ export default function ClientDashboard() {
         </div>
 
         <div>
-           <h3 className="text-lg font-semibold text-white mb-5 border-b border-white/10 pb-3 uppercase tracking-tighter">⚡ Speedrunners Disponibles</h3>
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+           <h3 className="text-base sm:text-lg font-semibold text-white mb-4 border-b border-white/10 pb-3 uppercase tracking-tighter">⚡ Speedrunners Disponibles</h3>
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
              {couriers.map((c: any) => {
                const avgPuntos = c.reviewsR?.length > 0 
                  ? (c.reviewsR.reduce((acc: number, r: any) => acc + r.puntos, 0) / c.reviewsR.length).toFixed(1)
                  : 'Nuevo';
                
                return (
-                 <div key={c.id} className="glass-premium p-5 flex items-center justify-between group hover:border-brand-light/20 transition-all">
-                   <div className="flex items-center gap-4">
+                 <div key={c.id} className="glass-premium p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between group hover:border-brand-light/20 transition-all gap-3 sm:gap-0">
+                   <div className="flex items-center gap-3 sm:gap-4">
                      <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center font-bold text-gray-400 group-hover:bg-white/10 transition-colors">
                        {c.nombre[0]}
                      </div>
@@ -194,11 +194,11 @@ export default function ClientDashboard() {
                        <div className="flex flex-wrap items-center gap-2 mt-1">
                          <span className="text-[10px] text-brand-light font-bold mr-1">⭐ {avgPuntos}</span>
                          {c.tarifas?.map((t: any) => (
-                           <span key={t.id} className="text-[9px] bg-white/10 px-2 py-0.5 rounded-md text-gray-400 border border-white/5">
+                           <span key={t.id} className="text-xs bg-white/10 px-2 py-0.5 rounded-md text-gray-400 border border-white/5">
                              {t.zona}: <span className="text-gray-200 font-bold">${t.precioBase.toLocaleString()}</span>
                            </span>
                          ))}
-                         {(!c.tarifas || c.tarifas.length === 0) && <span className="text-[9px] text-muted italic">Sin tarifas publicadas</span>}
+                         {(!c.tarifas || c.tarifas.length === 0) && <span className="text-xs text-muted italic">Sin tarifas publicadas</span>}
                        </div>
 
                      </div>
@@ -209,7 +209,7 @@ export default function ClientDashboard() {
                        document.getElementById('order-desc')?.focus();
                        window.scrollTo({ top: 0, behavior: 'smooth' });
                      }}
-                     className="btn-outline px-4 py-1.5 text-[10px] opacity-60 hover:opacity-100"
+                     className="btn-outline px-4 py-2 text-xs opacity-60 hover:opacity-100 sm:self-center"
                    >
                      Solicitar
                    </button>
@@ -221,7 +221,7 @@ export default function ClientDashboard() {
          </div>
 
         <div>
-          <h3 className="text-lg font-semibold text-white mb-5 border-b border-white/10 pb-3">📋 Mis Pedidos</h3>
+          <h3 className="text-base sm:text-lg font-semibold text-white mb-4 border-b border-white/10 pb-3">📋 Mis Pedidos</h3>
           {orders.length === 0 ? (
             <p className="text-muted text-sm italic">No has realizado pedidos todavía.</p>
           ) : (
@@ -236,7 +236,7 @@ export default function ClientDashboard() {
                     </div>
                     <span className={`status-${order.status}`}>{STATUS_LABEL[order.status]}</span>
                   </div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-400 bg-dark-800/50 p-3 rounded-xl">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 text-sm text-gray-400 bg-dark-800/50 p-3 rounded-xl">
                     <div className="flex flex-col"><span className="text-xs text-muted mb-0.5">Retiro</span><span className="truncate">{order.puntoRetiro}</span></div>
                     <div className="flex flex-col"><span className="text-xs text-muted mb-0.5">Entrega</span><span className="truncate">{order.puntoEntrega}</span></div>
                     <div className="flex flex-col"><span className="text-xs text-muted mb-0.5">Valor</span><span className="text-brand-light font-medium">${order.montoOfertado.toLocaleString()}</span></div>
@@ -252,15 +252,15 @@ export default function ClientDashboard() {
 
                   {order.status === 'ABIERTA' && order.offers && order.offers.length > 0 && (
                     <div className="mt-4 border-t border-white/5 pt-4">
-                      <p className="text-[10px] font-bold text-brand-light uppercase tracking-[0.2em] mb-3">Ofertas de Repartidores ({order.offers.length})</p>
+                      <p className="text-xs font-bold text-brand-light uppercase tracking-[0.1em] mb-3">Ofertas ({order.offers.length})</p>
                       <div className="space-y-2">
                         {order.offers.map(off => (
-                          <div key={off.id} className="flex items-center justify-between p-3 bg-white/[0.03] rounded-xl border border-white/5">
+                          <div key={off.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-white/[0.03] rounded-xl border border-white/5 gap-2 sm:gap-0">
                             <div className="text-sm">
                               <span className="text-white font-medium mr-2">{off.repartidor.nombre}</span>
                               <span className="text-brand-light font-bold">${off.montoOfertado.toLocaleString()}</span>
                             </div>
-                            <button onClick={(e) => { e.stopPropagation(); acceptOffer(order.id, off.id); }} className="btn-primary py-1 px-4 text-[10px]">Aceptar</button>
+                            <button onClick={(e) => { e.stopPropagation(); acceptOffer(order.id, off.id); }} className="btn-primary py-1.5 px-4 text-xs whitespace-nowrap">Aceptar</button>
                           </div>
                         ))}
                       </div>
@@ -268,14 +268,14 @@ export default function ClientDashboard() {
                   )}
                   
                   {order.status === 'COMPLETADA' && order.totalSeconds !== null && (
-                    <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-4">
+                    <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-white/5 pt-4 gap-3 sm:gap-0">
                       <div className="flex items-center gap-2 text-brand-light">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         <span className="font-mono text-sm tracking-wide">{formatSeconds(order.totalSeconds)}</span>
                       </div>
                       {order.repartidor && (
                         <button
-                          className="text-xs btn-outline py-1.5 px-4"
+                          className="text-xs btn-outline py-2 px-4 whitespace-nowrap"
                           onClick={(e) => { e.stopPropagation(); setReviewModal({ orderId: order.id, sujetoId: order.repartidor!.id }); }}
                         >
                           Calificar
@@ -292,8 +292,8 @@ export default function ClientDashboard() {
 
       {reviewModal && (
         <div className="fixed inset-0 bg-dark-900/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="glass-premium w-full max-w-sm p-6 animate-fade-in">
-            <h3 className="text-lg font-semibold text-white mb-5">⭐ Calificar Repartidor</h3>
+          <div className="glass-premium w-full max-w-sm p-4 sm:p-6 animate-fade-in max-h-[90vh] overflow-y-auto">
+            <h3 className="text-base sm:text-lg font-semibold text-white mb-4">⭐ Calificar Repartidor</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">Puntaje (1-5)</label>
@@ -302,7 +302,7 @@ export default function ClientDashboard() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-1.5">Comentario</label>
-                <textarea className="input-clean resize-none h-24" placeholder="Entrega rápida, muy profesional..."
+                <textarea className="input-clean resize-none h-20 sm:h-24" placeholder="Entrega rápida, muy profesional..."
                   value={reviewForm.comentario} onChange={(e) => setReviewForm({ ...reviewForm, comentario: e.target.value })} />
               </div>
               <div className="flex gap-3 pt-2">

@@ -35,10 +35,10 @@ export default function SpeedrunTimer({ startTime, active }: Props) {
   if (!active) return null;
 
   return (
-    <div className="flex flex-col items-center py-6 px-8 glass-premium border-brand/30 shadow-brand/10 group relative overflow-hidden">
+    <div className="flex flex-col items-center py-4 sm:py-6 px-5 sm:px-8 glass-premium border-brand/30 shadow-brand/10 group relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-50" />
-      <span className="text-[10px] font-bold text-muted uppercase tracking-[0.2em] mb-2 font-sans">Temporizador Activo</span>
-      <span className="text-5xl font-mono font-bold text-white tracking-tighter drop-shadow-sm">
+      <span className="text-xs sm:text-[10px] font-bold text-muted uppercase tracking-[0.1em] sm:tracking-[0.2em] mb-2 font-sans">Temporizador Activo</span>
+      <span className="text-3xl sm:text-5xl font-mono font-bold text-white tracking-tighter drop-shadow-sm">
         {formatTime(elapsed)}
       </span>
       <span className="text-[10px] text-brand-light font-bold uppercase tracking-widest mt-3 animate-pulse-subtle flex items-center gap-2">

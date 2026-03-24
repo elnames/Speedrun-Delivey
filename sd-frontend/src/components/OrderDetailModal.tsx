@@ -36,11 +36,15 @@ export default function OrderDetailModal({ orderId, onClose, isCourier }: Props)
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => setImage(reader.result as string);
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (file.size > 4 * 1024 * 1024) {
+      alert('La imagen no puede superar 4MB');
+      e.target.value = '';
+      return;
     }
+    const reader = new FileReader();
+    reader.onloadend = () => setImage(reader.result as string);
+    reader.readAsDataURL(file);
   };
 
   const submitEvidence = async () => {
@@ -62,21 +66,21 @@ export default function OrderDetailModal({ orderId, onClose, isCourier }: Props)
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
       <div className="glass-premium w-full max-w-2xl max-h-[90vh] overflow-y-auto p-0 flex flex-col animate-slide-up">
         
-        <div className="p-8 border-b border-white/5 flex justify-between items-start">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
+        <div className="p-4 sm:p-8 border-b border-white/5 flex justify-between items-start gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
               <span className="text-brand-light text-xs font-bold tracking-widest uppercase">Pedido #{order.id}</span>
               <span className={`status-${order.status} scale-90`}>{order.status}</span>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-1">{order.descripcion}</h2>
-            <p className="text-muted text-sm">{order.puntoRetiro} → {order.puntoEntrega}</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">{order.descripcion}</h2>
+            <p className="text-muted text-xs sm:text-sm break-words">{order.puntoRetiro} → {order.puntoEntrega}</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full transition-colors">
+          <button onClick={onClose} className="p-2.5 sm:p-2 hover:bg-white/5 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0">
             <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
 
-        <div className="p-8 space-y-8">
+        <div className="p-4 sm:p-8 space-y-5 sm:space-y-8">
           {order.status === 'EN_CAMINO' && (
              <SpeedrunTimer startTime={order.startTime} active />
           )}
@@ -85,7 +89,7 @@ export default function OrderDetailModal({ orderId, onClose, isCourier }: Props)
             <OrderTimeline status={order.status} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
             <div className="space-y-6">
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Información</h3>
               <div className="space-y-4">
@@ -101,7 +105,7 @@ export default function OrderDetailModal({ orderId, onClose, isCourier }: Props)
                   {order.repartidor?.tarifas && order.repartidor.tarifas?.length > 0 && (
                     <div className="flex flex-wrap gap-2 justify-end">
                       {order.repartidor.tarifas.map(t => (
-                        <span key={t.id} className="text-[9px] bg-white/5 py-1 px-2 rounded-md border border-white/10 text-gray-400">
+                        <span key={t.id} className="text-xs bg-white/5 py-1 px-2 rounded-md border border-white/10 text-gray-400">
                           {t.zona}: <span className="text-brand-light font-bold">${t.precioBase.toLocaleString()}</span>
                         </span>
                       ))}
@@ -130,7 +134,7 @@ export default function OrderDetailModal({ orderId, onClose, isCourier }: Props)
 
             <div className="space-y-6">
               <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest">Evidencias ({order.evidences?.length || 0})</h3>
-              <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="space-y-4 max-h-[200px] sm:max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                 {order.evidences?.map(ev => (
                   <div key={ev.id} className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 space-y-3">
                     <img src={ev.imageUrl} alt="Evidencia" className="w-full h-auto rounded-xl object-contain border border-white/10" />
