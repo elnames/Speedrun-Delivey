@@ -2,76 +2,87 @@
   <img src="assets/speed run circular.png" width="200" alt="Speedrun Delivery Logo">
 </p>
 
-# 🚀 Speedrun Delivery
+# Speedrun Delivery
 
-[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+Plataforma de logística de última milla con tracking en tiempo real, gestión de órdenes y roles diferenciados para clientes, couriers y administradores.
 
-> **"Entregas Evolucionadas. Solo Excelencia."**
-> Logística de alto rendimiento para quienes valoran el tiempo. Sin fricciones, sin retrasos.
+**[speedrun.nmsdev.tech](https://speedrun.nmsdev.tech)**
 
 ---
 
-## ✨ La Experiencia Speedrun
+## Stack
 
-**Speedrun Delivery** reinventa la logística de última milla con un enfoque en la velocidad y la transparencia. Nuestra plataforma ofrece una infraestructura de clase mundial diseñada para operar en tiempo real.
-
-- **Fricción Cero**: Interfaz minimalista diseñada para la eficiencia operativa máxima.
-- **Sincronización Atómica**: Cada actualización de estado se propaga instantáneamente a todos los interesados.
-- **Negociación Fluid**: Sistema bidireccional de ofertas que permite acuerdos rápidos y justos.
-- **Evidencia Instantánea**: Sistema optimizado de carga de fotos para validación inmediata de entregas.
-
----
-
-## 🎨 Estética de Alto Rendimiento
-
-El sistema visual de **Speedrun Delivery** se centra en la claridad y el minimalismo premium:
-
-- **Contraste Extremo**: El fondo negro profundo permite una legibilidad superior de los indicadores críticos.
-- **HUD Glassmorphism**: Componentes con capas translúcidas que proporcionan profundidad sin distraer al usuario.
-- **Animaciones Fluidas**: Micro-interacciones suaves que guían al usuario a través del flujo de entrega.
-- **Atmósfera Dinámica**: Efectos visuales sutiles que aportan una sensación de tecnología viva y activa.
+| Capa | Tecnología |
+|---|---|
+| Frontend | React + Vite, Tailwind CSS, Framer Motion |
+| Backend | NestJS, Passport JWT, TypeScript |
+| Base de datos | SQL Server, Prisma ORM |
+| Tiempo real | Socket.io |
+| Infraestructura | Docker, PM2, Nginx Proxy Manager |
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Funcionalidades
 
-Construido con las tecnologías más modernas para garantizar estabilidad y escalabilidad:
-
-| Componente | Tecnología |
-| :--- | :--- |
-| **Arquitectura** | Monorepo (Frontend + Backend) |
-| **Backend** | NestJS (Type-safe & Scalable) |
-| **Frontend** | React + Vite (Ultra-fast Rendering) |
-| **Base de Datos** | Prisma ORM + MSSQL (Data Reliability) |
-| **Comunicación** | Socket.io (Low-latency WebSockets) |
-| **Estructura** | Tailwind CSS (Design System Consistency) |
+- Autenticación JWT con roles `CLIENT` / `COURIER` / `ADMIN`
+- Gestión de órdenes — creación, asignación y seguimiento de estados
+- Upload de evidencias fotográficas por orden
+- Dashboards diferenciados por rol
+- SpeedrunTimer — contador de tiempo en vivo por entrega
+- Panel de administración — gestión de órdenes, couriers y clientes
+- Landing page con animaciones (BentoGrid, ProcessTimeline, RouteVisualizer, Testimonials)
 
 ---
 
-## 🏗️ Arquitectura de Datos
+## Estructura
 
-```mermaid
-graph LR
-    A[Speedrun Client] -->|REST/WS| B[NestJS Logic Core]
-    B -->|Prisma| C[(Enterprise Database)]
+```
+sd/
+├── sd-backend/    # NestJS API (puerto 3006)
+├── sd-frontend/   # React + Vite (puerto 3005)
+└── README.md
 ```
 
 ---
 
-## 📂 Configuración del Repositorio
+## Desarrollo local
+
+### Backend
+```bash
+cd sd-backend
+cp .env.example .env
+npm install
+npx prisma migrate deploy
+npm run start:dev
+```
+
+### Frontend
+```bash
+cd sd-frontend
+npm install
+npm run dev
+```
+
+---
+
+## Deploy con Docker
 
 ```bash
-├── sd-backend/       # Lógica de Negocio y API
-├── sd-frontend/      # Dashboard y Landing Page
-└── README.md         # Documentación Central
+docker compose up -d --build
 ```
+
+Variables requeridas en `sd-backend/.env`:
+
+| Variable | Descripción |
+|---|---|
+| `DATABASE_URL` | Conexión SQL Server |
+| `JWT_SECRET` | Secreto JWT |
+| `PORT` | Puerto del servidor (default: 3006) |
 
 ---
 
-<p align="center">
-  <strong>Speedrun Delivery</strong> | Logística Evolucionada.
-</p>
+## Bootstrap admin (producción)
+
+```bash
+docker exec -it speedrun_backend node create-admin.js
+```

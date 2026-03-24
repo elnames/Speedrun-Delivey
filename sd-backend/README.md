@@ -1,33 +1,34 @@
-# ⚙️ Speedrun Backend: Core Logic
+# Speedrun Delivery — Backend
 
-Servidor de alto rendimiento construido con **NestJS**, encargado de gestionar toda la lógica de negocio, autenticación y comunicación en tiempo real de **Speedrun Delivery**.
+API REST + WebSockets construida con NestJS. Puerto por defecto: `3006`.
 
-## 🚀 Tecnologías
-- **Framework**: NestJS
-- **ORM**: Prisma (MSSQL)
-- **Real-time**: Socket.io
-- **Auth**: Passport JWT
-- **Validación**: Class-validator
+## Endpoints principales
 
-## 📦 Instalación
+| Método | Ruta | Auth | Descripción |
+|---|---|---|---|
+| POST | `/auth/login` | — | Login, retorna JWT |
+| POST | `/auth/register` | — | Registro de usuario |
+| GET | `/orders` | JWT | Listar órdenes (filtradas por rol) |
+| POST | `/orders` | CLIENT | Crear orden |
+| PATCH | `/orders/:id/status` | COURIER/ADMIN | Actualizar estado |
+| PATCH | `/orders/:id/assign` | ADMIN | Asignar courier |
+| POST | `/orders/:id/evidence` | COURIER | Subir evidencia fotográfica |
+| GET | `/orders/:id/evidence` | JWT | Ver evidencias de una orden |
+| GET | `/users` | ADMIN | Listar usuarios |
 
-1. Instalar dependencias:
-   ```bash
-   npm install
-   ```
-2. Configurar variables de entorno:
-   ```bash
-   cp .env.example .env
-   ```
-3. Generar cliente de Prisma:
-   ```bash
-   npx prisma generate
-   ```
+## Variables de entorno
 
-## 🛠️ Desarrollo
-```bash
-npm run start:dev
+```env
+DATABASE_URL=sqlserver://host:port;database=db;user=u;password=p;trustServerCertificate=true
+JWT_SECRET=your-secret
+PORT=3006
 ```
 
----
-Diseñado para la eficiencia operativa.
+## Comandos
+
+```bash
+npm install
+npx prisma migrate deploy
+npm run start:dev       # desarrollo
+npm run build && npm run start:prod  # producción
+```

@@ -1,29 +1,29 @@
-# 🎨 Speedrun Frontend: Sober Obsidian HUD
+# Speedrun Delivery — Frontend
 
-Interfaz de usuario premium construida con **React** y **Vite**, optimizada para una experiencia de usuario fluida y de alto impacto visual.
+Aplicación React + Vite. Puerto por defecto: `3005`.
 
-## 🚀 Tecnologías
-- **Core**: React + Vite
-- **Estilos**: Tailwind CSS
-- **Animaciones**: Framer Motion
-- **Iconos**: Lucide React
-- **Comunicación**: Axios + Socket.io Client
+**[speedrun.nmsdev.tech](https://speedrun.nmsdev.tech)**
 
-## 📦 Instalación
+## Rutas
 
-1. Instalar dependencias:
-   ```bash
-   npm install
-   ```
-2. Configurar variables de entorno:
-   ```bash
-   cp .env.example .env
-   ```
+| Ruta | Descripción |
+|---|---|
+| `/` | Landing page |
+| `/login` | Login |
+| `/register` | Registro |
+| `/dashboard` | Dashboard según rol (CLIENT / COURIER / ADMIN) |
 
-## 🛠️ Desarrollo
-```bash
-npm run dev
+## Variables de entorno
+
+```env
+VITE_API_URL=https://speedrun.nmsdev.tech/api
 ```
 
----
-Estética Obsidian. Logística Evolucionada.
+## Comandos
+
+```bash
+npm install
+npm run dev      # http://localhost:3005
+npm run build
+npm run preview
+```
