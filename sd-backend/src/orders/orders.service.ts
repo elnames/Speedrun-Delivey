@@ -127,61 +127,72 @@ export class OrdersService {
 
   /** Cliente acepta una oferta específica */
   async acceptOffer(orderId: number, offerId: number, clienteId: number) {
-    const order = await this.findOne(orderId);
-    if (order.clienteId !== clienteId) throw new ForbiddenException('No eres el dueño de este pedido');
-    if (order.status !== 'ABIERTA') throw new BadRequestException('El pedido ya no está abierto');
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({ where: { id: orderId } });
+      if (!order) throw new NotFoundException('Pedido no encontrado');
+      if (order.clienteId !== clienteId) throw new ForbiddenException('No eres el dueño de este pedido');
+      if (order.status !== 'ABIERTA') throw new BadRequestException('El pedido ya no está abierto');
 
-    const offer = await this.prisma.offer.findUnique({ where: { id: offerId } });
-    if (!offer || offer.orderId !== orderId) throw new NotFoundException('Oferta no válida');
+      const offer = await tx.offer.findUnique({ where: { id: offerId } });
+      if (!offer || offer.orderId !== orderId) throw new NotFoundException('Oferta no válida');
 
-    const updated = await this.prisma.order.update({
-      where: { id: orderId },
-      data: { 
-        status: 'ASIGNADA', 
-        repartidorId: offer.repartidorId,
-        montoOfertado: offer.montoOfertado // Se actualiza al monto aceptado
-      },
+      return tx.order.update({
+        where: { id: orderId },
+        data: {
+          status: 'ASIGNADA',
+          repartidorId: offer.repartidorId,
+          montoOfertado: offer.montoOfertado,
+        },
+      });
     });
-    
+
     this.gateway.broadcastStatus(orderId, updated);
     return updated;
   }
 
   /** Repartidor inicia el viaje – inicia cronómetro */
   async startDelivery(orderId: number, repartidorId: number) {
-    const order = await this.findOne(orderId);
-    if (order.repartidorId !== repartidorId)
-      throw new ForbiddenException('No eres el repartidor de este pedido');
-    if (order.status !== 'ASIGNADA')
-      throw new BadRequestException('El pedido debe estar ASIGNADA para iniciar');
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({ where: { id: orderId } });
+      if (!order) throw new NotFoundException('Pedido no encontrado');
+      if (order.repartidorId !== repartidorId)
+        throw new ForbiddenException('No eres el repartidor de este pedido');
+      if (order.status !== 'ASIGNADA')
+        throw new BadRequestException('El pedido debe estar ASIGNADA para iniciar');
 
-    const updated = await this.prisma.order.update({
-      where: { id: orderId },
-      data: { status: 'EN_CAMINO', startTime: new Date() },
+      return tx.order.update({
+        where: { id: orderId },
+        data: { status: 'EN_CAMINO', startTime: new Date() },
+      });
     });
+
     this.gateway.broadcastStatus(orderId, updated);
     return updated;
   }
 
   /** Repartidor entrega – detiene cronómetro y calcula totalSeconds */
   async completeDelivery(orderId: number, repartidorId: number) {
-    const order = await this.findOne(orderId);
-    if (order.repartidorId !== repartidorId)
-      throw new ForbiddenException('No eres el repartidor de este pedido');
-    if (order.status !== 'EN_CAMINO')
-      throw new BadRequestException('El pedido debe estar EN_CAMINO para completar');
-    if (!order.startTime)
-      throw new BadRequestException('startTime no definido');
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({ where: { id: orderId } });
+      if (!order) throw new NotFoundException('Pedido no encontrado');
+      if (order.repartidorId !== repartidorId)
+        throw new ForbiddenException('No eres el repartidor de este pedido');
+      if (order.status !== 'EN_CAMINO')
+        throw new BadRequestException('El pedido debe estar EN_CAMINO para completar');
+      if (!order.startTime)
+        throw new BadRequestException('startTime no definido');
 
-    const endTime = new Date();
-    const totalSeconds = Math.floor(
-      (endTime.getTime() - order.startTime.getTime()) / 1000,
-    );
+      const endTime = new Date();
+      const totalSeconds = Math.floor(
+        (endTime.getTime() - order.startTime.getTime()) / 1000,
+      );
 
-    const updated = await this.prisma.order.update({
-      where: { id: orderId },
-      data: { status: 'COMPLETADA', endTime, totalSeconds },
+      return tx.order.update({
+        where: { id: orderId },
+        data: { status: 'COMPLETADA', endTime, totalSeconds },
+      });
     });
+
     this.gateway.broadcastStatus(orderId, updated);
     return updated;
   }
