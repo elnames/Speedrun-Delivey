@@ -47,16 +47,16 @@
 
   /* Sophisticated Buttons */
   .btn-primary {
-    @apply bg-white hover:bg-neutral-200 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-white/10 active:scale-95 flex items-center justify-center gap-2 tracking-tight;
+    @apply bg-white hover:bg-neutral-200 text-black font-semibold py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-white/10 active:scale-95 flex items-center justify-center gap-2 tracking-tight touch-manipulation min-h-[44px];
   }
 
   .btn-outline {
-    @apply bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 active:scale-95 flex items-center justify-center gap-2;
+    @apply bg-transparent border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 touch-manipulation min-h-[44px];
   }
 
   /* Clean Inputs */
   .input-clean {
-    @apply w-full bg-neutral-900/80 border border-white/10 text-white rounded-2xl px-4 py-3 placeholder:text-neutral-500 focus:outline-none focus:border-white/30 focus:ring-0 transition-all duration-300;
+    @apply w-full bg-neutral-900/80 border border-white/10 text-white rounded-2xl px-4 py-3 placeholder:text-neutral-500 focus:outline-none focus:border-white/30 focus:ring-0 transition-all duration-300 min-h-[44px];
   }
 
 

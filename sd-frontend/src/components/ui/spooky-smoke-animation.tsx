@@ -31,11 +31,11 @@ void main(){
   col.b+=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
 
   col=mix(col, u_color, dot(col,vec3(.21,.71,.07)));
-  
-  // Make it extremely subtle ("tenue")
-  col *= 0.12; 
-  
-  O=vec4(col, 1.0); // Opaque black with subtle smoke
+
+  // Subtle but visible smoke
+  col *= 0.18;
+
+  O=vec4(col, 1.0);
 }
 `;
 

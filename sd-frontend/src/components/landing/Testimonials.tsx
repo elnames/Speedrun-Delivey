@@ -25,7 +25,7 @@ const testimonials = [
 
 const Testimonials: React.FC<{ lightMode?: boolean }> = ({ lightMode = false }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
       {testimonials.map((t, i) => (
         <motion.div
           key={i}
@@ -33,7 +33,7 @@ const Testimonials: React.FC<{ lightMode?: boolean }> = ({ lightMode = false }) 
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: i * 0.1 }}
-          className={`${lightMode ? 'glass-light' : 'glass-premium'} p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300`}
+          className={`${lightMode ? 'glass-light' : 'glass-premium'} p-5 sm:p-8 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300`}
         >
           <div>
             <div className="flex gap-1 mb-6">

@@ -20,12 +20,12 @@ export default function RouteVisualizer() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto h-[600px] glass-premium rounded-[3rem] overflow-hidden border border-white/5 bg-black group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+    <div className="relative w-full max-w-5xl mx-auto h-[280px] sm:h-[400px] md:h-[600px] glass-premium rounded-[1.5rem] sm:rounded-[3rem] overflow-hidden border border-white/5 bg-black group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
       <div className="absolute inset-0 z-0">
         <img 
           src="/santiago-map.png" 
           alt="Santiago Map" 
-          className="w-full h-full object-cover opacity-60 grayscale brightness-125 contrast-125 scale-110 group-hover:scale-100 transition-transform duration-[20s] ease-linear"
+          className="w-full h-full object-cover opacity-60 grayscale brightness-125 contrast-125 scale-100 sm:scale-110 group-hover:scale-100 transition-transform duration-[20s] ease-linear"
         />
         <div className="absolute inset-0 bg-black/20" />
       </div>
@@ -33,7 +33,7 @@ export default function RouteVisualizer() {
 
 
       {/* HUD Elements */}
-      <div className="absolute top-8 left-8 z-20 space-y-4">
+      <div className="absolute top-4 left-4 sm:top-8 sm:left-8 z-20 space-y-2 sm:space-y-4">
         <div className="px-4 py-2 bg-black/60 border border-white/10 rounded-full backdrop-blur-md flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
           <span className="text-[10px] font-black tracking-widest uppercase text-white">LIVE_TRAJECTORY_SYNC</span>
@@ -45,24 +45,24 @@ export default function RouteVisualizer() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-white/5 backdrop-blur-sm"
+            className="flex items-center gap-3 bg-black/40 p-3 sm:p-4 rounded-2xl border border-white/5 backdrop-blur-sm"
           >
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-white shadow-lg">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-white shadow-lg flex-shrink-0">
               {statuses[statusIdx].icon}
             </div>
             <div>
-              <p className={`text-xs font-black tracking-[0.2em] uppercase ${statuses[statusIdx].color}`}>
+              <p className={`text-[9px] sm:text-xs font-black tracking-[0.15em] sm:tracking-[0.2em] uppercase ${statuses[statusIdx].color}`}>
                 {statuses[statusIdx].text}
               </p>
-              <p className="text-neutral-500 text-[10px] font-mono mt-1">08:42:12 - INTERSECCIÓN ALPHA-9</p>
+              <p className="text-neutral-500 text-[8px] sm:text-[10px] font-mono mt-1">08:42:12 - ALPHA-9</p>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <div className="absolute bottom-8 right-8 z-20 text-right bg-black/40 p-6 rounded-3xl border border-white/5 backdrop-blur-md">
-        <p className="text-[50px] font-black text-white leading-none tracking-tighter italic">99.9%</p>
-        <p className="text-neutral-400 text-[10px] font-bold tracking-widest uppercase mt-2">EFICIENCIA_ESTRUCTURAL</p>
+      <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-8 z-20 text-right bg-black/40 p-3 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/5 backdrop-blur-md">
+        <p className="text-3xl sm:text-[50px] font-black text-white leading-none tracking-tighter italic">99.9%</p>
+        <p className="text-neutral-400 text-[8px] sm:text-[10px] font-bold tracking-widest uppercase mt-1 sm:mt-2">EFICIENCIA</p>
       </div>
 
       {/* Simulated Route over the map */}
