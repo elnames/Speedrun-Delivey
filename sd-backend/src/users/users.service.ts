@@ -49,7 +49,7 @@ export class UsersService {
   }
 
   async adminCreateUser(dto: AdminCreateUserDto) {
-    const hashed = await bcrypt.hash(dto.password, 10);
+    const hashed = await bcrypt.hash(dto.password, 12);
     return this.prisma.user.create({
       data: { ...dto, password: hashed },
       select: { id: true, email: true, nombre: true, role: true },
@@ -65,7 +65,7 @@ export class UsersService {
   }
 
   async adminUpdatePassword(id: number, password: string) {
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash(password, 12);
     return this.prisma.user.update({
       where: { id },
       data: { password: hashed },

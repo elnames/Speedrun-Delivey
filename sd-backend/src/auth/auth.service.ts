@@ -19,7 +19,7 @@ export class AuthService {
     const existing = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (existing) throw new ConflictException('Email ya registrado');
 
-    const hashed = await bcrypt.hash(dto.password, 10);
+    const hashed = await bcrypt.hash(dto.password, 12);
     const user = await this.prisma.user.create({
       data: { email: dto.email, password: hashed, nombre: dto.nombre, role: dto.role },
     });
